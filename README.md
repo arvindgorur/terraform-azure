@@ -1,3 +1,9 @@
 # terraform-azure
 Trialing Terraform in Azure
-Hello World!
+
+Right now it creates:
+- resource group
+- virtual network
+- subnet
+- virtual interface
+- network security group
