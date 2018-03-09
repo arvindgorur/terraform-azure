@@ -59,8 +59,8 @@ resource "azurerm_network_security_rule" "allow-https" {
 
 resource "azurerm_virtual_network" "production-network" {
 	name 								= "production-network"
-	address_space 		= ["10.1.0.0/16"]
-	location 			= "${azurerm_resource_group.rg-terraform-east.location}"
+	address_space 			= ["10.1.0.0/16"]
+	location 						= "${azurerm_resource_group.rg-terraform-east.location}"
 	resource_group_name = "${azurerm_resource_group.rg-terraform-east.name}"
 }
 
