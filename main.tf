@@ -30,15 +30,29 @@ resource "azurerm_network_interface" "test" {
 	network_security_group_id = "${azurerm_network_security_group.my-security-group.id}"
 
 	ip_configuration {
-		name = "TestConfiguration1"
-		subnet_id = "${azurerm_subnet.YYZ.id}"
+		name 													= "TestConfiguration1"
+		subnet_id 										= "${azurerm_subnet.YYZ.id}"
 		private_ip_address_allocation = "static"
-		private_ip_address = "10.1.1.25"
+		private_ip_address 						= "10.1.1.25"
 	}
 }
 
 resource "azurerm_network_security_group" "my-security-group" {
-	name = "my-security-group"
-	location = "${azurerm_resource_group.rg-terraform-east.location}"
+	name 								= "my-security-group"
+	location 						= "${azurerm_resource_group.rg-terraform-east.location}"
 	resource_group_name = "${azurerm_resource_group.rg-terraform-east.name}"
+}
+
+resource "azurerm_network_security_rule" "allow-ssh" {
+	name 												= "allow SSH"
+	priority 										= 100
+	direction 									= "Inbound"
+	access 											= "Allow"
+	protocol 										= "TCP"
+	source_port_range 					= "*"
+	destination_port_range 			= "22"
+	source_address_prefix 			= "*"
+	destination_address_prefix 	= "*"
+	resource_group_name 				= "${azurerm_resource_group.rg-terraform-east.name}"
+  network_security_group_name = "${azurerm_network_security_group.my-security-group.name}"
 }
