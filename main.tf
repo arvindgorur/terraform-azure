@@ -72,14 +72,14 @@ resource "azurerm_subnet" "prod-subnet" {
 	network_security_group_id = "${azurerm_network_security_group.my-security-group.id}"
 }
 
-resource "azurerm_network_interface" "ubuntu-server-nic" {
-  name = "ubuntu-server-nic"
+resource "azurerm_network_interface" "docker-ubuntu-server-nic" {
+  name = "docker-ubuntu-server-nic"
 	location 									= "${azurerm_resource_group.rg-terraform-east.location}"
 	resource_group_name 			= "${azurerm_resource_group.rg-terraform-east.name}"
 	network_security_group_id = "${azurerm_network_security_group.my-security-group.id}"
 
 	ip_configuration {
-		name 													= "ubuntu-server-nic-config"
+		name 													= "docker-ubuntu-server-nic-config"
 		subnet_id 										= "${azurerm_subnet.prod-subnet.id}"
 		private_ip_address_allocation = "static"
 		private_ip_address 						= "10.1.1.25"
@@ -87,10 +87,10 @@ resource "azurerm_network_interface" "ubuntu-server-nic" {
 	}
 }
 
-resource "azurerm_public_ip" "ubuntu-server" {
-	name = "ubuntu-server-ip"
+resource "azurerm_public_ip" "docker-ubuntu-server" {
+	name = "docker-ubuntu-server-ip"
 	location 										 = "${azurerm_resource_group.rg-terraform-east.location}"
 	resource_group_name 				 = "${azurerm_resource_group.rg-terraform-east.name}"
 	public_ip_address_allocation = "dynamic"
-	domain_name_label 					 = "ubuntu-server"
+	domain_name_label 					 = "docker-ubuntu-server"
 }
