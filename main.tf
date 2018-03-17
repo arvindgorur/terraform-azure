@@ -5,25 +5,25 @@ provider "azurerm" {
 }
 
 resource "azurerm_resource_group" "rg-terraform-east" {
-	name			= "rg-terraform-east"
-	location	= "Canada East"
+	name 		 = "rg-terraform-east"
+	location = "Canada East"
 }
 
 resource "azurerm_network_security_group" "my-security-group" {
-	name 								= "my-security-group"
+	name  							= "my-security-group"
 	location 						= "${azurerm_resource_group.rg-terraform-east.location}"
 	resource_group_name = "${azurerm_resource_group.rg-terraform-east.name}"
 }
 
 resource "azurerm_network_security_rule" "allow-ssh" {
-	name 												= "allow SSH"
-	priority 										= 100
-	direction 									= "Inbound"
-	access 											= "Allow"
-	protocol 										= "TCP"
-	source_port_range 					= "*"
-	destination_port_range 			= "22"
-	source_address_prefix 			= "*"
+	name 											 	= "allow SSH"
+	priority  								 	= 100
+	direction 								 	= "Inbound"
+	access  									 	= "Allow"
+	protocol 									 	= "TCP"
+	source_port_range 				 	= "*"
+	destination_port_range 		 	= "22"
+	source_address_prefix 		 	= "*"
 	destination_address_prefix 	= "*"
 	resource_group_name 				= "${azurerm_resource_group.rg-terraform-east.name}"
   network_security_group_name = "${azurerm_network_security_group.my-security-group.name}"
@@ -73,7 +73,7 @@ resource "azurerm_subnet" "prod-subnet" {
 }
 
 resource "azurerm_network_interface" "docker-ubuntu-server-nic" {
-  name = "docker-ubuntu-server-nic"
+  name 											= "docker-ubuntu-server-nic"
 	location 									= "${azurerm_resource_group.rg-terraform-east.location}"
 	resource_group_name 			= "${azurerm_resource_group.rg-terraform-east.name}"
 	network_security_group_id = "${azurerm_network_security_group.my-security-group.id}"
@@ -88,7 +88,7 @@ resource "azurerm_network_interface" "docker-ubuntu-server-nic" {
 }
 
 resource "azurerm_public_ip" "docker-ubuntu-server" {
-	name = "docker-ubuntu-server-ip"
+	name 												 = "docker-ubuntu-server-ip"
 	location 										 = "${azurerm_resource_group.rg-terraform-east.location}"
 	resource_group_name 				 = "${azurerm_resource_group.rg-terraform-east.name}"
 	public_ip_address_allocation = "dynamic"
