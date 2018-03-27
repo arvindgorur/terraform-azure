@@ -1,2 +1,2 @@
-variable "Subscription_ID" {}
-variable "Tenant_ID" {}
+variable "AZ_Subscription_ID" {}
+variable "AZ_Tenant_ID" {}

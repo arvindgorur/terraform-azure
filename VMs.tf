@@ -1,8 +1,9 @@
-resource "azurerm_virtual_machine" "docker-ubuntu" {
-  name 							    = "docker-ubuntu"
+/*
+resource "azurerm_virtual_machine" "docker-server" {
+  name 							    = "docker-server"
 	location              = "${azurerm_resource_group.rg-terraform-east.location}"
 	resource_group_name   = "${azurerm_resource_group.rg-terraform-east.name}"
-  network_interface_ids = ["${azurerm_network_interface.ubuntu-server-nic.id}"]
+  network_interface_ids = ["${azurerm_network_interface.docker-server-nic.id}"]
 	vm_size               = "Standard_A1"
 
 	#delete_on_termination = true
@@ -35,7 +36,8 @@ resource "azurerm_virtual_machine" "docker-ubuntu" {
     }
   }
 }
-
+/*
 resource "azurerm_virtual_machine" "kubernetes-ubuntu" {
 
 }
+*/
