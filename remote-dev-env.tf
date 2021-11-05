@@ -63,3 +63,40 @@ resource "azurerm_network_interface_security_group_association" "dev_vm_nic_sg_a
   network_interface_id      = azurerm_network_interface.main_nic.id
   network_security_group_id = azurerm_network_security_group.main_nsg.id
 }
+
+resource "azurerm_linux_virtual_machine" "dev_vm" {
+  name                = "dev_vm"
+  location            = azurerm_resource_group.remote_dev_env.location
+  resource_group_name = azurerm_resource_group.remote_dev_env.name
+  size                = "Standard_D2s_v3"
+  admin_username      = "arvindgorur"
+  network_interface_ids = [
+    azurerm_network_interface.main_nic.id,
+  ]
+
+  admin_ssh_key {
+    username   = "adminuser"
+    public_key = file("../public-ssh-keys/remote-dev-env-key")
+  }
+
+  os_disk {
+    caching              = "ReadWrite"
+    storage_account_type = "StandardSSD_LRS"
+    name                 = "dev-vm-os-disk"
+  }
+
+  source_image_reference {
+    publisher = "Canonical"
+    offer     = "UbuntuServer"
+    sku       = "18.04-LTS"
+    version   = "latest"
+  }
+
+  boot_diagnostics {
+    storage_account_uri = null
+  }
+
+  tags = {
+    "Purpose" = "Development"
+  }
+}
