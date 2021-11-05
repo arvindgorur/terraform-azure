@@ -100,3 +100,11 @@ resource "azurerm_linux_virtual_machine" "dev_vm" {
     "Purpose" = "Development"
   }
 }
+
+resource "azurerm_dev_test_global_vm_shutdown_schedule" "shutdown_schedule" {
+  virtual_machine_id = azurerm_virtual_machine.dev_vm.id
+  location           = azurerm_resource_group.remote_dev_env.location
+  enabled            = true
+  daily_recurrence_time = "17100"
+  timezone              = "Eastern Standard Time"
+}
