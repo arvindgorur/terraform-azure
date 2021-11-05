@@ -108,5 +108,6 @@ resource "azurerm_dev_test_global_vm_shutdown_schedule" "shutdown_schedule" {
   daily_recurrence_time = "1700"
   timezone              = "Eastern Standard Time"
   notification_settings {
+    enabled = false
   }
 }
