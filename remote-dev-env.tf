@@ -76,7 +76,7 @@ resource "azurerm_linux_virtual_machine" "dev_vm" {
 
   admin_ssh_key {
     username   = "adminuser"
-    public_key = file("../public-ssh-keys/remote-dev-env-key")
+    public_key = file("/public-ssh-keys/remote-dev-env-key")
   }
 
   os_disk {
