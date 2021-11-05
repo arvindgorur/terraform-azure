@@ -21,7 +21,7 @@ resource "azurerm_subnet" "default_subnet" {
 }
 
 resource "azurerm_network_security_group" "main_nsg" {
-  name                = "main-nsg"
+  name                = "main_nsg"
   location            = azurerm_resource_group.remote_dev_env.location
   resource_group_name = azurerm_resource_group.remote_dev_env.name
 
@@ -36,4 +36,30 @@ resource "azurerm_network_security_group" "main_nsg" {
     source_address_prefix      = "*"
     destination_address_prefix = "*"
   }
+}
+
+resource "azurerm_public_ip" "public_ip" {
+  name                = "dev_vm_public_ip"
+  location            = azurerm_resource_group.remote_dev_env.location
+  resource_group_name = azurerm_resource_group.remote_dev_env.name
+  allocation_method   = "Dynamic"
+}
+
+resource "azurerm_network_interface" "main_nic" {
+  name                = "dev_vm_nic_1"
+  location            = azurerm_resource_group.remote_dev_env.location
+  resource_group_name = azurerm_resource_group.remote_dev_env.name
+
+  ip_configuration {
+    name                          = "primary"
+    subnet_id                     = azurerm_subnet.default_subnet.id
+    private_ip_address_allocation = "Static"
+    private_ip_address            = "10.0.1.25"
+    public_ip_address_id          = azurerm_public_ip.public_ip.id
+  }
+}
+
+resource "azurerm_network_interface_security_group_association" "dev_vm_nic_sg_association" {
+  network_interface_id      = azurerm_network_interface.main_nic.id
+  network_security_group_id = azurerm_network_security_group.main_nsg.id
 }
