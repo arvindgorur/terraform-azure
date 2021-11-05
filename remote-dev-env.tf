@@ -7,10 +7,10 @@ resource "azurerm_resource_group" "remote_dev_env" {
 }
 
 resource "azurerm_virtual_network" "remote_dev_env_vnet" {
-  name = "vnet-canada-central"
+  name                = "vnet-canada-central"
   resource_group_name = azurerm_resource_group.remote_dev_env.name
-  location = azurerm_resource_group.remote_dev_env.location
-  address_space = [ "10.0.0.0/16" ]
+  location            = azurerm_resource_group.remote_dev_env.location
+  address_space       = [ "10.0.0.0/16" ]
 }
 
 resource "azurerm_subnet" "default_subnet" {
@@ -102,9 +102,9 @@ resource "azurerm_linux_virtual_machine" "dev_vm" {
 }
 
 resource "azurerm_dev_test_global_vm_shutdown_schedule" "shutdown_schedule" {
-  virtual_machine_id = azurerm_linux_virtual_machine.dev_vm.id
-  location           = azurerm_resource_group.remote_dev_env.location
-  enabled            = true
-  daily_recurrence_time = "17100"
+  virtual_machine_id    = azurerm_linux_virtual_machine.dev_vm.id
+  location              = azurerm_resource_group.remote_dev_env.location
+  enabled               = true
+  daily_recurrence_time = "1700"
   timezone              = "Eastern Standard Time"
 }
