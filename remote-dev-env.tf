@@ -65,7 +65,7 @@ resource "azurerm_network_interface_security_group_association" "dev_vm_nic_sg_a
 }
 
 resource "azurerm_linux_virtual_machine" "dev_vm" {
-  name                = "dev_vm"
+  name                = "dev-vm"
   location            = azurerm_resource_group.remote_dev_env.location
   resource_group_name = azurerm_resource_group.remote_dev_env.name
   size                = "Standard_D2s_v3"
