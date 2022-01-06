@@ -101,7 +101,7 @@ resource "azurerm_linux_virtual_machine" "nomad_vm" {
   }
 }
 
-resource "azurerm_dev_test_global_vm_shutdown_schedule" "shutdown_schedule" {
+resource "azurerm_dev_test_global_vm_shutdown_schedule" "nomad_vm_shutdown_schedule" {
   virtual_machine_id    = azurerm_linux_virtual_machine.nomad_vm.id
   location              = azurerm_resource_group.hashicorp_nomad.location
   enabled               = true
