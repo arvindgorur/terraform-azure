@@ -64,50 +64,50 @@ resource "azurerm_network_interface_security_group_association" "nomad_vm_nic_sg
   network_security_group_id = azurerm_network_security_group.nomad_main_nsg.id
 }
 
-# resource "azurerm_linux_virtual_machine" "nomad_vm" {
-#   name                = "nomad-vm"
-#   location            = azurerm_resource_group.hashicorp_nomad.location
-#   resource_group_name = azurerm_resource_group.hashicorp_nomad.name
-#   size                = "Standard_D2s_v3"
-#   admin_username      = "arvindgorur"
-#   network_interface_ids = [
-#     azurerm_network_interface.nomad_main_nic.id,
-#   ]
+resource "azurerm_linux_virtual_machine" "nomad_vm" {
+  name                = "nomad-vm"
+  location            = azurerm_resource_group.hashicorp_nomad.location
+  resource_group_name = azurerm_resource_group.hashicorp_nomad.name
+  size                = "Standard_DS1_v2"
+  admin_username      = "arvindgorur"
+  network_interface_ids = [
+    azurerm_network_interface.nomad_main_nic.id,
+  ]
 
-#   admin_ssh_key {
-#     username   = "arvindgorur"
-#     public_key = file("./public-ssh-keys/remote-dev-env-key.pub")
-#   }
+  admin_ssh_key {
+    username   = "arvindgorur"
+    public_key = file("./public-ssh-keys/remote-dev-env-key.pub")
+  }
 
-#   os_disk {
-#     caching              = "ReadWrite"
-#     storage_account_type = "StandardSSD_LRS"
-#     name                 = "dev-vm-os-disk"
-#   }
+  os_disk {
+    caching              = "ReadWrite"
+    storage_account_type = "StandardSSD_LRS"
+    name                 = "dev-vm-os-disk"
+  }
 
-#   source_image_reference {
-#     publisher = "Canonical"
-#     offer     = "UbuntuServer"
-#     sku       = "18.04-LTS"
-#     version   = "latest"
-#   }
+  source_image_reference {
+    publisher = "Canonical"
+    offer     = "UbuntuServer"
+    sku       = "18.04-LTS"
+    version   = "latest"
+  }
 
-#   boot_diagnostics {
-#     storage_account_uri = null
-#   }
+  boot_diagnostics {
+    storage_account_uri = null
+  }
 
-#   tags = {
-#     "Purpose" = "Nomad"
-#   }
-# }
+  tags = {
+    "Purpose" = "Nomad"
+  }
+}
 
-# resource "azurerm_dev_test_global_vm_shutdown_schedule" "shutdown_schedule" {
-#   virtual_machine_id    = azurerm_linux_virtual_machine.nomad_vm.id
-#   location              = azurerm_resource_group.hashicorp_nomad.location
-#   enabled               = true
-#   daily_recurrence_time = "1700"
-#   timezone              = "Eastern Standard Time"
-#   notification_settings {
-#     enabled = false
-#   }
-# }
+resource "azurerm_dev_test_global_vm_shutdown_schedule" "shutdown_schedule" {
+  virtual_machine_id    = azurerm_linux_virtual_machine.nomad_vm.id
+  location              = azurerm_resource_group.hashicorp_nomad.location
+  enabled               = true
+  daily_recurrence_time = "1700"
+  timezone              = "Eastern Standard Time"
+  notification_settings {
+    enabled = false
+  }
+}
