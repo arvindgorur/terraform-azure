@@ -68,7 +68,7 @@ resource "azurerm_linux_virtual_machine" "dev_vm" {
   name                = "dev-vm"
   location            = azurerm_resource_group.remote_dev_env.location
   resource_group_name = azurerm_resource_group.remote_dev_env.name
-  size                = "Standard_D2s_v3"
+  size                = "Standard_DS1_v2"
   admin_username      = "arvindgorur"
   network_interface_ids = [
     azurerm_network_interface.main_nic.id,
