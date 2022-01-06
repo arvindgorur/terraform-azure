@@ -38,7 +38,7 @@ resource "azurerm_network_security_group" "nomad_main_nsg" {
   }
 }
 
-resource "azurerm_public_ip" "nomad_nomad_public_ip" {
+resource "azurerm_public_ip" "nomad_public_ip" {
   name                = "nomad-vm-public-ip"
   location            = azurerm_resource_group.hashicorp_nomad.location
   resource_group_name = azurerm_resource_group.hashicorp_nomad.name
